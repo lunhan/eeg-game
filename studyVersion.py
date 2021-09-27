@@ -4,7 +4,7 @@ from pygame.sprite import Sprite
 from pygame.rect import Rect
 from enum import Enum
 
-img = pygame.image.load("img/nosignal_v1.png") #import img
+img = pygame.image.load("img/nosignal_v1.png")
 img = pygame.transform.scale(img, (60,60))
 main_img = pygame.image.load('img/gameMain.png')
 main_img = pygame.transform.scale(main_img, (260, 260))
@@ -18,7 +18,6 @@ BLUE = (106, 159, 181)
 BG_1 = (83, 228, 179) #Mint Green
 TXT_1 = (0, 0, 0)#Black
 PINK = (234, 208, 209)
-WHITE = (255, 255, 255)
 
 
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
@@ -227,7 +226,7 @@ def game_finish(screen):
         center_position=(500, 500),
         font_size=20,
         bg_rgb=BLUE,
-        text_rgb=WHITE,
+        text_rgb=TXT_1,
         text="Game Over, Back to main page",
         action=GameState.TITLE,
     )
@@ -237,7 +236,7 @@ def game_finish(screen):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 mouse_up = True
-        screen.fill(BLUE)
+        screen.fill(BG_1)
 
         ui_action = return_btn.update(pygame.mouse.get_pos(), mouse_up)
         if ui_action is not None:

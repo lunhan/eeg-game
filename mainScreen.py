@@ -4,12 +4,12 @@ from pygame.sprite import Sprite
 from pygame.rect import Rect
 from enum import Enum
 
+img = pygame.image.load("img/nosignal_v1.png")
+img = pygame.transform.scale(img, (60,60))
 
 #color we gonn are reuse
 BLUE = (106, 159, 181)
 WHITE = (255, 255, 255)
-
-pygame.display.set_caption("EEG-Game")
 
 
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
@@ -93,9 +93,11 @@ def main():
 
     game_state = GameState.TITLE #start with main(title) screen
 
-    img = pygame.image.load("img/nosignal_v1.png")
+    #set app name on top bar
+    pygame.display.set_caption("EEG-Game")
 
-    screen.blit(img, (1000,0))
+    #set icon:
+    #pygame.display.set_icon(icon file)
 
     # create a ui element
     # quit_btn = UIElement(
@@ -164,6 +166,7 @@ def title_screen(screen): #to have our button, check main loop
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 mouse_up = True
         screen.fill(BLUE)#re-draw the background
+        screen.blit(img, (930, 10))
 
         for button in buttons:
             ui_action = button.update(pygame.mouse.get_pos(), mouse_up)
@@ -203,7 +206,7 @@ def game_finish(screen):
         font_size=20,
         bg_rgb=BLUE,
         text_rgb=WHITE,
-        text="Game Over, Bacck to main page",
+        text="Game Over, Back to main page",
         action=GameState.TITLE,
     )
 

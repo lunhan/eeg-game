@@ -1,8 +1,11 @@
+from time import clock
+
 import pygame
 import pygame.freetype
 from pygame.sprite import Sprite
 from pygame.rect import Rect
 from enum import Enum
+import time
 
 #For the other class, write it into an individiual file and import like this
 from UIElement import UIElement
@@ -15,6 +18,8 @@ logo = pygame.image.load("img/logo.png")
 logo = pygame.transform.scale(logo, (32, 32))
 rule = pygame.image.load("img/rule.png")
 rule = pygame.transform.scale(rule, (633, 513))
+timer = pygame.image.load("img/clock.png")
+timer = pygame.transform.scale(timer, (142, 88))
 
 #color we gonn are reuse
 BLUE = (106, 159, 181)
@@ -149,7 +154,6 @@ def play_level(screen):
         text="Game finished",
         action=GameState.FINISH,
     )
-
     while True:
         mouse_up = False
         for event in pygame.event.get():
@@ -161,8 +165,30 @@ def play_level(screen):
         if ui_action is not None:
             return ui_action
         finsih_btn.draw(screen)
+        screen.blit(timer, (780, 57))
+        screen.blit(game_clock(screen), (780, 57))
 
-        pygame.display.flip()
+def game_clock(screen):
+    clock_ = 10
+    while clock_ > 0:
+        pygame.time.get_ticks()
+        if (pygame.time.get_ticks() % 1000 == 0):
+            clock_ = clock_ - 1
+            clock_g = str(clock_)
+            screen.fill(BLUE)
+            textFont = pygame.font.SysFont('comicsansms', 25)
+            TextSurf, TextReact = textObj(clock_g, textFont, WHITE)
+            TextReact.center = (850, 100)
+            screen.blit(TextSurf, TextReact)
+            screen.blit(timer, (780, 57))
+            pygame.display.update()
+            print(clock_)
+
+
+def textObj(text, font, color):
+    textSurface = font.render(text, True, color)
+    return textSurface, textSurface.get_rect()
+
 
 def game_finish(screen):
     return_btn = UIElement(

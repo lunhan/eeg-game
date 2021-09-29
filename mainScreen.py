@@ -6,6 +6,7 @@ from enum import Enum
 
 #For the other class, write it into an individiual file and import like this
 from UIElement import UIElement
+from clock import Clock
 
 img = pygame.image.load("img/nosignal_v1.png") #import img
 img = pygame.transform.scale(img, (60,60))
@@ -15,6 +16,8 @@ logo = pygame.image.load("img/logo.png")
 logo = pygame.transform.scale(logo, (32, 32))
 rule = pygame.image.load("img/rule.png")
 rule = pygame.transform.scale(rule, (633, 513))
+timer_img = pygame.image.load("img/clock.png")
+timer_img = pygame.transform.scale(timer_img, (142, 88))
 
 #color we gonn are reuse
 BLUE = (106, 159, 181)
@@ -150,6 +153,21 @@ def play_level(screen):
         action=GameState.FINISH,
     )
 
+    # def game_clock(screen):
+    #     clock_ = 10
+    #     while clock_ > 0:
+    #         pygame.time.get_ticks()
+    #         if (pygame.time.get_ticks()%1000==0):
+    #             clock_ = clock_ - 1
+    #             clock_g = str(clock_)
+    #             screen.fill(BLUE)
+    #             textFont = pygame.font.SysFont('comicsansms', 25)
+    #             TextSurf, TextReact = textObj(clock_g, textFont, TIMER)
+    #             TextReact.center = (850, 100)
+    #             screen.blit(timer, (780, 57))
+    #             pygame.display.update()
+    #             print(clock_)
+
     while True:
         mouse_up = False
         for event in pygame.event.get():
@@ -161,8 +179,44 @@ def play_level(screen):
         if ui_action is not None:
             return ui_action
         finsih_btn.draw(screen)
+        clock_ = 10
+        while clock_ > 0:
+            pygame.time.get_ticks()
+            if (pygame.time.get_ticks() % 1000 == 0):
+                clock_ = clock_ - 1
+                clock_g = str(clock_)
+                timer = Clock(
+                    center_position=(850, 100),
+                    font_size=20,
+                    bg_rgb=BLUE,
+                    text_rgb=WHITE,
+                    text=clock_g,
+                )
+                timer.draw(screen)
+        #     while clock_ > 0:
+        #         pygame.time.get_ticks()
+        #         if (pygame.time.get_ticks()%1000==0):
+        #             clock_ = clock_ - 1
+        #             clock_g = str(clock_)
+        #             screen.fill(BLUE)
+        #             textFont = pygame.font.SysFont('comicsansms', 25)
+        #             TextSurf, TextReact = textObj(clock_g, textFont, TIMER)
+        #             TextReact.center = (850, 100)
+        #             screen.blit(timer, (780, 57))
+        #             pygame.display.update()
+        #             print(clock_)
+        timer = Clock(
+            center_position=(850, 100),
+            font_size=20,
+            bg_rgb=BLUE,
+            text_rgb=WHITE,
+            text="5",
+        )
+        timer.draw(screen)
+        screen.blit(timer_img, (780, 57))
 
         pygame.display.flip()
+
 
 def game_finish(screen):
     return_btn = UIElement(
@@ -197,6 +251,7 @@ def game_info(screen):
         text="Back to main",
         action=GameState.TITLE,
     )
+    clock = Clock
 
     while True:
         mouse_up = False
